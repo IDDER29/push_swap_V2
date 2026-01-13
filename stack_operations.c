@@ -1,86 +1,86 @@
-#include <stdlib.h>
 #include "push_swap.h"
+#include <stdlib.h>
 
-void initialise_stack(t_list *stack)
+void	initialise_stack(t_list *stack)
 {
-    stack->head = NULL;
-    stack->tail = NULL;
-    stack->size = 0;
+	stack->head = NULL;
+	stack->tail = NULL;
+	stack->size = 0;
 }
 
-t_node *create_node(int num)
+t_node	*create_node(int num)
 {
-    t_node *new_node;
+	t_node	*new_node;
 
-    new_node = malloc(sizeof(t_node));
-    if (!new_node)
-        return (NULL);
-    new_node->value = num;
-    new_node->index = -1;
-    new_node->target = -1;
-    new_node->total_cost = 0;
-    new_node->ra_cost = 0;
-    new_node->rb_cost = 0;
-    new_node->rr_cost = 0;
-    new_node->rra_cost = 0;
-    new_node->rrb_cost = 0;
-    new_node->rrr_cost = 0;
-    new_node->next = NULL;
-    new_node->prv = NULL;
-    return (new_node);
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return (NULL);
+	new_node->value = num;
+	new_node->index = -1;
+	new_node->target = -1;
+	new_node->total_cost = 0;
+	new_node->ra_cost = 0;
+	new_node->rb_cost = 0;
+	new_node->rr_cost = 0;
+	new_node->rra_cost = 0;
+	new_node->rrb_cost = 0;
+	new_node->rrr_cost = 0;
+	new_node->next = NULL;
+	new_node->prv = NULL;
+	return (new_node);
 }
 
-void append_to_stack(t_list *stack, t_node *new_node)
+void	append_to_stack(t_list *stack, t_node *new_node)
 {
-    if (!stack || !new_node)
-        return;
-    if (stack->head == NULL)
-    {
-        stack->head = new_node;
-        stack->tail = new_node;
-    }
-    else
-    {
-        stack->tail->next = new_node;
-        new_node->prv = stack->tail;
-        stack->tail = new_node;
-    }
-    stack->size++;
+	if (!stack || !new_node)
+		return ;
+	if (stack->head == NULL)
+	{
+		stack->head = new_node;
+		stack->tail = new_node;
+	}
+	else
+	{
+		stack->tail->next = new_node;
+		new_node->prv = stack->tail;
+		stack->tail = new_node;
+	}
+	stack->size++;
 }
 
-void fill_stack_a(t_list *stack, int *arr, int size)
+void	fill_stack_a(t_list *stack, int *arr, int size)
 {
-    int i;
-    t_node *new_node;
+	int		i;
+	t_node	*new_node;
 
-    if (!stack || !arr || size <= 0)
-        return;
-    i = 0;
-    while (i < size)
-    {
-        new_node = create_node(arr[i]);
-        if (!new_node)
-            return;
-        append_to_stack(stack, new_node);
-        i++;
-    }
+	if (!stack || !arr || size <= 0)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		new_node = create_node(arr[i]);
+		if (!new_node)
+			return ;
+		append_to_stack(stack, new_node);
+		i++;
+	}
 }
 
-void free_stack(t_list *stack)
+void	free_stack(t_list *stack)
 {
-    t_node *current;
-    t_node *next;
+	t_node	*current;
+	t_node	*next;
 
-    if (!stack)
-        return;
-    current = stack->head;
-    while (current != NULL)
-    {
-        next = current->next;
-        free(current);
-        current = next;
-    }
-    stack->head = NULL;
-    stack->tail = NULL;
-    stack->size = 0;
+	if (!stack)
+		return ;
+	current = stack->head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	stack->head = NULL;
+	stack->tail = NULL;
+	stack->size = 0;
 }

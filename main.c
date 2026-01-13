@@ -10,24 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include "push_swap.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    int *data;
-    int size;
+	int *data;
+	int size;
 
-    if (argc < 2)
-        return (0);
-    data = parse_all_args(argc, argv, &size);
-    if (!data)
-    {
-        write(2, "Error\n", 6);
-        return (1);
-    }
-    push_swap(data, size);
-    free(data);
-    return (0);
+	if (argc < 2)
+		return (0);
+	data = parse_all_args(argc, argv, &size);
+	if (!data)
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	push_swap(data, size);
+	free(data);
+	return (0);
 }
