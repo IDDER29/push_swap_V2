@@ -1,0 +1,30 @@
+# Executables (not allowed per subject)
+push_swap
+checker
+
+# Object files (not allowed per subject)
+*.o
+
+# Libraries (not allowed per subject)
+*.a
+
+# Windows executables
+*.exe
+
+# Test files (not allowed per subject)
+*.sh
+test_*
+checker_linux
+checker_Mac
+
+# Documentation files (not allowed - only README.md)
+*.md
+!README.md
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

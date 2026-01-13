@@ -61,9 +61,6 @@ void init_stack_cost(t_list *stack);
 t_node *find_min_node_value(t_list *stack);
 t_node *find_min_node_cost(t_list *stack);
 int is_sorted(t_list *stack);
-void print_stack(t_list *stack, char letter);
-void print_sorted_values(t_list *stack);
-void write_stack_to_file(t_list *stack, const char *filename);
 char *ft_strncpy(char *dest, char *src, int n);
 
 /* input_validation.c */

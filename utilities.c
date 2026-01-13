@@ -70,32 +70,3 @@ int is_sorted(t_list *stack)
     }
     return (1);
 }
-
-static void print_node_info(t_node *node)
-{
-    ft_printf("value = %d, index = %d, target = %d, ",
-              node->value, node->index, node->target);
-    ft_printf("total_cost = %d,\n", node->total_cost);
-    ft_printf("ra_cost = %d, rb_cost = %d, rr_cost = %d, ",
-              node->ra_cost, node->rb_cost, node->rr_cost);
-    ft_printf("rra_cost = %d, rrb_cost = %d, rrr_cost = %d\n",
-              node->rra_cost, node->rrb_cost, node->rrr_cost);
-}
-
-void print_stack(t_list *stack, char letter)
-{
-    t_node *current_node;
-
-    if (!stack || stack->head == NULL)
-    {
-        ft_printf("Stack %c is empty\n", letter);
-        return;
-    }
-    ft_printf("Stack %c\n", letter);
-    current_node = stack->head;
-    while (current_node != NULL)
-    {
-        print_node_info(current_node);
-        current_node = current_node->next;
-    }
-}

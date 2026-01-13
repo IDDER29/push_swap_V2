@@ -7,27 +7,29 @@ int ft_isspace(char c)
     return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
 }
 
-static int parse_digits(const char **str, int *error)
+static long long parse_digits(const char **str, int *error)
 {
-    long result;
+    long long result;
+    long long prev;
 
     result = 0;
     while (**str >= '0' && **str <= '9')
     {
+        prev = result;
         result = result * 10 + (*(*str)++ - '0');
-        if (result > INT_MAX)
+        if (result / 10 != prev || result < 0)
         {
             *error = 1;
             return (0);
         }
     }
-    return ((int)result);
+    return (result);
 }
 
 int ft_atoi_check(const char *str, int *error)
 {
     int sign;
-    long result;
+    long long result;
 
     sign = 1;
     while (ft_isspace(*str))
@@ -40,7 +42,11 @@ int ft_atoi_check(const char *str, int *error)
         return (0);
     }
     result = parse_digits(&str, error);
-    if (*error || (sign == -1 && -result < INT_MIN))
+    if (*error)
+        return (0);
+    if (sign == 1 && result > INT_MAX)
+        *error = 1;
+    if (sign == -1 && result > 2147483648LL)
         *error = 1;
     if (*str != '\0')
         *error = 1;

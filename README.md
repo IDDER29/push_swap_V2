@@ -10,8 +10,10 @@ This implementation features:
 - **Optimized sorting algorithm** for various data sizes
 - **Efficient cost calculation** using multiple rotation strategies
 - **Performance targets achieved**: <700 operations for 100 numbers, <5500 for 500 numbers
+- **Bonus checker implementation** - reads and validates operations from stdin
 - **Strict adherence** to 42 Norminette coding standards
-- **Modular architecture** with 14 well-organized source files
+- **Robust error handling** - proper integer overflow detection using `long long`
+- **Modular architecture** with clean separation between mandatory and bonus parts
 
 The project demonstrates fundamental concepts in algorithm design, computational complexity, and optimized data structure manipulation.
 
@@ -19,43 +21,71 @@ The project demonstrates fundamental concepts in algorithm design, computational
 
 ### Compilation
 
-To compile the project, run:
-
+**Mandatory Part:**
 ```bash
 make
 ```
 
-This will:
-1. Compile the custom ft_printf library
-2. Compile all push_swap source files
-3. Link everything into the `push_swap` executable
+This builds the `push_swap` executable.
 
-The Makefile includes all required rules:
-- `make` or `make all` - Build the executable
+**Bonus Part:**
+```bash
+make bonus
+```
+
+This builds the `checker` program (bonus part).
+
+**Available Make Rules:**
+- `make` or `make all` - Build push_swap
+- `make bonus` - Build checker (bonus)
 - `make clean` - Remove object files
-- `make fclean` - Remove object files and executable
-- `make re` - Clean and rebuild everything
+- `make fclean` - Remove objects and executables
+- `make re` - Rebuild everything
 
 ### Usage
 
-Run the program with a list of integers as arguments:
+**Mandatory - push_swap:**
+
+Run the program with integers as arguments:
 
 ```bash
 ./push_swap 2 1 3 6 5 8
 ```
 
-The program outputs the sequence of operations needed to sort the stack:
+Output (sequence of operations to sort):
+```
+sa
+pb
+pb
+pb
+sa
+pa
+pa
+pa
+```
 
+**Bonus - checker:**
+
+Reads operations from stdin and validates if they correctly sort the stack:
+
+```bash
+# Pipe push_swap output to checker
+./push_swap 4 67 3 87 23 | ./checker 4 67 3 87 23
+# Output: OK
+
+# Manual input
+echo -e "sa\npb\npa" | ./checker 3 2 1
+# Output: KO (not sorted)
+
+# Subject example
+echo -e "rra\npb\nsa\nrra\npa" | ./checker 3 2 1 0
+# Output: OK
 ```
-sa
-pb
-pb
-pb
-sa
-pa
-pa
-pa
-```
+
+Checker outputs:
+- `OK` - Stack A is sorted, Stack B is empty
+- `KO` - Not properly sorted
+- `Error` - Invalid input or instructions
 
 #### Valid Input
 - Space-separated integers
@@ -121,34 +151,61 @@ The strategy with minimum total cost is selected for each move.
 
 ## Project Structure
 
-### Core Modules
+### Mandatory Part
+
+**Core Modules:**
 - [main.c](main.c) - Entry point and argument parsing
-- [input_validation.c](input_validation.c) - Input parsing and validation
+- [input_validation.c](input_validation.c) - Input parsing and validation with overflow detection
 - [push_swap_main.c](push_swap_main.c) - Main sorting orchestration
 
-### Stack Operations
+**Stack Operations:**
 - [stack_operations.c](stack_operations.c) - Stack initialization and memory management
 - [stack_push_operations.c](stack_push_operations.c) - Push operations (pa, pb)
-- [stack_output.c](stack_output.c) - Output and display functions
 - [swap_operations.c](swap_operations.c) - Swap operations (sa, sb, ss)
 - [rotate_operations.c](rotate_operations.c) - Rotate operations (ra, rb, rr)
 - [reverse_rotate_operations.c](reverse_rotate_operations.c) - Reverse rotate (rra, rrb, rrr)
 
-### Algorithm Components
+**Algorithm Components:**
 - [algorithm_sort.c](algorithm_sort.c) - Sorting logic and initialization
 - [algorithm_target.c](algorithm_target.c) - Target position assignment
 - [algorithm_cost.c](algorithm_cost.c) - Cost calculation and strategy selection
 - [algorithm_execute.c](algorithm_execute.c) - Move execution
 
-### Utilities
-- [utilities.c](utilities.c) - Helper functions (find min, check sorted, print stack)
+**Utilities:**
+- [utilities.c](utilities.c) - Helper functions (find min, check sorted)
 
-### Headers
+**Input Parsing:**
+- [input_parse_args.c](input_parse_args.c) - Argument parsing
+- [input_parse_string.c](input_parse_string.c) - String parsing
+- [input_parse_utils.c](input_parse_utils.c) - Parsing utilities
+
+### Bonus Part
+
+**Checker Program:**
+- [checker_bonus.c](checker_bonus.c) - Main checker entry point
+- [checker_utils_bonus.c](checker_utils_bonus.c) - Instruction parser and executor
+- [get_next_line_bonus.c](get_next_line_bonus.c) - Read instructions from stdin
+- [operations_bonus.c](operations_bonus.c) - Silent push operations
+- [operations_swap_bonus.c](operations_swap_bonus.c) - Silent swap operations
+- [operations_rotate_bonus.c](operations_rotate_bonus.c) - Silent rotate operations
+- [operations_reverse_rotate_bonus.c](operations_reverse_rotate_bonus.c) - Silent reverse rotate
+
+**Bonus Features:**
+- Reads instructions from standard input
+- Executes all 11 operations silently (no output)
+- Validates instruction format
+- Checks final sorting state
+- Error handling for invalid instructions
+
+### Headers & Library
+
+**Headers:**
 - [push_swap.h](push_swap.h) - Main header with structures and function prototypes
-- [ft_printf.h](ft_printf.h) - Custom printf implementation header
+- [push_swap_bonus.h](push_swap_bonus.h) - Bonus checker header
+- [ft_printf.h](ft_printf.h) - Custom printf implementation
 
-### Library
-- ft_printf implementation (4 source files) - Custom printf for output
+**Custom Library:**
+- ft_printf implementation (4 source files) - Custom formatted output
 
 ## Norminette Compliance
 
@@ -187,7 +244,7 @@ All core algorithm design, implementation, and optimization were done manually. 
 
 ## Testing
 
-### Manual Testing
+### Manual Testing - Mandatory
 
 Test with various input sizes:
 
@@ -201,45 +258,57 @@ Test with various input sizes:
 ./push_swap 1 2 2              # Error (duplicates)
 ./push_swap 1 abc 3            # Error (non-integer)
 ./push_swap 2147483648         # Error (overflow)
+./push_swap -2147483649        # Error (underflow)
 
 # Small sets
-./push_swap 2 1
-./push_swap 3 2 1
+./push_swap 2 1                # Output: sa
+./push_swap 3 2 1              # Various operations
 
 # Performance testing
-ARG=$(seq 1 100 | shuf); ./push_swap $ARG | wc -l
+ARG=$(seq 1 100 | shuf | tr '\n' ' '); ./push_swap $ARG | wc -l
+ARG=$(seq 1 500 | shuf | tr '\n' ' '); ./push_swap $ARG | wc -l
 ```
 
-### Checker Verification
-
-If you have access to the official checker:
+### Manual Testing - Bonus (Checker)
 
 ```bash
-ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_OS $ARG
+# Subject examples
+echo -e "rra\npb\nsa\nrra\npa" | ./checker 3 2 1 0   # OK
+echo -e "sa\nrra\npb" | ./checker 3 2 1 0            # KO
+
+# Integration tests
+./push_swap 4 67 3 87 23 | ./checker 4 67 3 87 23   # OK
+./push_swap 2 1 | ./checker 2 1                      # OK
+
+# Error handling
+./checker 3 2 one 0                                  # Error
+echo "wrong" | ./checker 2 1                         # Error
+./checker 3 2 3 1                                    # Error (duplicates)
+
+# All operations test
+echo -e "sa\npb\npa" | ./checker 3 2 1              # Test specific ops
 ```
-
-Expected output: `OK`
-
-### Python Simulation
-
-The project includes Python scripts for manual verification:
-
-```python
-# Simulate operations and verify sorting
-python3 test_verification.py
-```
-
-This script:
-1. Generates random test data
-2. Runs push_swap with the data
-3. Simulates each operation step-by-step
-4. Verifies the final sorted state
 
 ## Author
 
-**42 Login**: developer  
-**Project**: Push_swap  
-**Completion Date**: January 2026
+**Project**: Push_swap (Mandatory + Bonus)  
+**Completion Date**: January 2026  
+**School**: 42 Network
+
+## Key Features Implemented
+
+✅ **Mandatory:**
+- Optimized sorting algorithm
+- All 11 stack operations
+- Integer overflow/underflow detection (`long long` validation)
+- Performance: ~565 ops for 100 numbers, ~5200 for 500
+
+✅ **Bonus:**
+- Complete checker implementation
+- Reads operations from stdin
+- Validates all 11 operations
+- Proper error handling
+- Integration with push_swap
 
 ## License
 
