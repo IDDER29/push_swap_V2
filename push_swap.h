@@ -64,11 +64,25 @@ int is_sorted(t_list *stack);
 void print_stack(t_list *stack, char letter);
 void print_sorted_values(t_list *stack);
 void write_stack_to_file(t_list *stack, const char *filename);
+char *ft_strncpy(char *dest, char *src, int n);
 
 /* input_validation.c */
 int ft_isspace(char c);
 int ft_atoi_check(const char *str, int *error);
 int check_duplicates(int *arr, int size);
+
+/* input_parse_utils.c */
+int parse_single_arg(char *arg, int *error);
+int count_numbers(char *str);
+char *skip_spaces(char *str);
+int get_number_length(char *str);
+int count_total_numbers(int argc, char **argv);
+
+/* input_parse_string.c */
+int *parse_string(char *str, int *size);
+
+/* input_parse_args.c */
+int *parse_all_args(int argc, char **argv, int *size);
 
 /* push_swap_main.c */
 void push_swap(int *data, int size);
