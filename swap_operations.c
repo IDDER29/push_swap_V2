@@ -1,9 +1,7 @@
 #include "push_swap.h"
 #include "ft_printf.h"
 
-extern int g_move_count;
-
-void swap_list(t_list *stack)
+static void swap_list(t_list *stack)
 {
     t_node *first_node;
     t_node *second_node;
@@ -29,7 +27,6 @@ void sa(t_list *stack_a)
         return;
     swap_list(stack_a);
     ft_printf("sa\n");
-    g_move_count++;
 }
 
 void sb(t_list *stack_b)
@@ -38,7 +35,6 @@ void sb(t_list *stack_b)
         return;
     swap_list(stack_b);
     ft_printf("sb\n");
-    g_move_count++;
 }
 
 void ss(t_list *stack_a, t_list *stack_b)
@@ -48,5 +44,4 @@ void ss(t_list *stack_a, t_list *stack_b)
     swap_list(stack_a);
     swap_list(stack_b);
     ft_printf("ss\n");
-    g_move_count++;
 }

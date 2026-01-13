@@ -32,21 +32,17 @@ void fill_stack_a(t_list *stack, int *arr, int size);
 void free_stack(t_list *stack);
 
 /* push_swap_operations.c */
-void push_to_stack(t_list *source, t_list *destination);
 void pb(t_list *stack_a, t_list *stack_b);
 void pa(t_list *stack_a, t_list *stack_b);
 void fill_stack_b(t_list *stack_a, t_list *stack_b);
-void swap_list(t_list *stack);
 void sa(t_list *stack_a);
 void sb(t_list *stack_b);
 void ss(t_list *stack_a, t_list *stack_b);
 
 /* rotate_operations.c */
-void rotate_stack(t_list *stack);
 void ra(t_list *stack_a);
 void rb(t_list *stack_b);
 void rr(t_list *stack_a, t_list *stack_b);
-void reverse_rotate_stack(t_list *stack);
 void rra(t_list *stack_a);
 void rrb(t_list *stack_b);
 void rrr(t_list *stack_a, t_list *stack_b);

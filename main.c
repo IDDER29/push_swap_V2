@@ -2,8 +2,6 @@
 #include <unistd.h>
 #include "push_swap.h"
 
-int g_move_count = 0;
-
 static int parse_single_arg(char *arg, int *error)
 {
     *error = 0;

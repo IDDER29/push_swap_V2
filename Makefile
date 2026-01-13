@@ -1,8 +1,9 @@
 # Library name
 LIB_NAME    = libftprintf.a
 
-# Executable name
-EXEC_NAME   = push_swap
+# Executable name (required by subject as NAME)
+NAME        = push_swap
+EXEC_NAME   = $(NAME)
 
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror

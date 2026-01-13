@@ -1,9 +1,7 @@
 #include "push_swap.h"
 #include "ft_printf.h"
 
-extern int g_move_count;
-
-void reverse_rotate_stack(t_list *stack)
+static void reverse_rotate_stack(t_list *stack)
 {
     t_node *current_node;
 
@@ -24,7 +22,6 @@ void rra(t_list *stack_a)
         return;
     reverse_rotate_stack(stack_a);
     ft_printf("rra\n");
-    g_move_count++;
 }
 
 void rrb(t_list *stack_b)
@@ -33,7 +30,6 @@ void rrb(t_list *stack_b)
         return;
     reverse_rotate_stack(stack_b);
     ft_printf("rrb\n");
-    g_move_count++;
 }
 
 void rrr(t_list *stack_a, t_list *stack_b)
@@ -43,5 +39,4 @@ void rrr(t_list *stack_a, t_list *stack_b)
     reverse_rotate_stack(stack_a);
     reverse_rotate_stack(stack_b);
     ft_printf("rrr\n");
-    g_move_count++;
 }

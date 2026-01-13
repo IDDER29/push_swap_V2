@@ -1,9 +1,7 @@
 #include "push_swap.h"
 #include "ft_printf.h"
 
-extern int g_move_count;
-
-void push_to_stack(t_list *source, t_list *destination)
+static void push_to_stack(t_list *source, t_list *destination)
 {
     t_node *node;
 
@@ -36,14 +34,12 @@ void pb(t_list *stack_a, t_list *stack_b)
 {
     push_to_stack(stack_a, stack_b);
     ft_printf("pb\n");
-    g_move_count++;
 }
 
 void pa(t_list *stack_a, t_list *stack_b)
 {
     push_to_stack(stack_b, stack_a);
     ft_printf("pa\n");
-    g_move_count++;
 }
 
 void fill_stack_b(t_list *stack_a, t_list *stack_b)

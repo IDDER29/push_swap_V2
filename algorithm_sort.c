@@ -1,8 +1,6 @@
 #include "push_swap.h"
 #include "ft_printf.h"
 
-extern int g_move_count;
-
 void sort_three(t_list *stack)
 {
     int a;
