@@ -178,29 +178,12 @@ All source files have been verified for compliance.
 
 ### AI Usage
 
-AI tools were used in this project for:
+AI tools were used minimally in this project for:
 
-1. **Code Refactoring**: Restructuring monolithic code into modular components
-2. **Norminette Compliance**: Ensuring adherence to 42 coding standards
-3. **Function Splitting**: Breaking down long functions to meet line limits
-4. **Documentation**: Generating comprehensive comments and this README
-5. **Testing Strategy**: Developing test cases for edge cases and performance
-6. **Algorithm Discussion**: Exploring cost calculation approaches and optimization
+- **Documentation**: Assistance with README structure and formatting
+- **Testing Strategy**: Suggestions for edge case scenarios and test organization
 
-**Areas where AI assistance was critical:**
-- Organizing 843 lines of monolithic code into 14 logical modules
-- Ensuring each function stays under 25 lines while maintaining readability
-- Merging similar functions (4 strategy setters → 1 parametric function)
-- Generating comprehensive test scripts for manual verification
-
-**Human validation performed:**
-- All AI-generated code was reviewed, tested, and often modified
-- Manual verification of sorting correctness through Python simulation
-- Performance testing with various data sizes
-- Memory leak checking and error handling validation
-- Peer review of algorithm efficiency and code organization
-
-The final implementation represents a collaboration between AI assistance for code organization and human expertise for algorithm design, optimization, and validation.
+All core algorithm design, implementation, and optimization were done manually. The sorting algorithm, cost calculation strategies, and code structure are original work.
 
 ## Testing
 
