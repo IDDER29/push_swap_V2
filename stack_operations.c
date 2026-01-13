@@ -8,19 +8,6 @@ void initialise_stack(t_list *stack)
     stack->size = 0;
 }
 
-static void init_node_costs(t_node *node)
-{
-    node->index = -1;
-    node->target = -1;
-    node->total_cost = 0;
-    node->ra_cost = 0;
-    node->rb_cost = 0;
-    node->rr_cost = 0;
-    node->rra_cost = 0;
-    node->rrb_cost = 0;
-    node->rrr_cost = 0;
-}
-
 t_node *create_node(int num)
 {
     t_node *new_node;
@@ -29,7 +16,15 @@ t_node *create_node(int num)
     if (!new_node)
         return (NULL);
     new_node->value = num;
-    init_node_costs(new_node);
+    new_node->index = -1;
+    new_node->target = -1;
+    new_node->total_cost = 0;
+    new_node->ra_cost = 0;
+    new_node->rb_cost = 0;
+    new_node->rr_cost = 0;
+    new_node->rra_cost = 0;
+    new_node->rrb_cost = 0;
+    new_node->rrr_cost = 0;
     new_node->next = NULL;
     new_node->prv = NULL;
     return (new_node);

@@ -69,4 +69,12 @@ void print_stack(t_list *stack, char letter);
 void print_sorted_values(t_list *stack);
 void write_stack_to_file(t_list *stack, const char *filename);
 
+/* input_validation.c */
+int ft_isspace(char c);
+int ft_atoi_check(const char *str, int *error);
+int check_duplicates(int *arr, int size);
+
+/* push_swap_main.c */
+void push_swap(int *data, int size);
+
 #endif

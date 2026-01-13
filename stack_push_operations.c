@@ -5,28 +5,28 @@ extern int g_move_count;
 
 void push_to_stack(t_list *source, t_list *destination)
 {
-    t_node *current_node;
+    t_node *node;
 
     if (!source || !destination || !source->head)
         return;
-    current_node = source->head;
-    source->head = current_node->next;
+    node = source->head;
+    source->head = node->next;
     if (source->head != NULL)
         source->head->prv = NULL;
     else
         source->tail = NULL;
-    current_node->prv = NULL;
-    current_node->next = NULL;
+    node->prv = NULL;
+    node->next = NULL;
     if (destination->head == NULL)
     {
-        destination->head = current_node;
-        destination->tail = current_node;
+        destination->head = node;
+        destination->tail = node;
     }
     else
     {
-        current_node->next = destination->head;
-        destination->head->prv = current_node;
-        destination->head = current_node;
+        node->next = destination->head;
+        destination->head->prv = node;
+        destination->head = node;
     }
     source->size--;
     destination->size++;

@@ -1,79 +1,78 @@
 #include <stdlib.h>
 #include "push_swap.h"
 
-static void set_costs_strategy_rr(t_node *node, int src_fwd, int dest_fwd)
+static void set_strategy(t_node *n, int strategy, int sf, int sb, int df, int db)
 {
-    node->rr_cost = min(src_fwd, dest_fwd);
-    node->rb_cost = src_fwd - node->rr_cost;
-    node->ra_cost = dest_fwd - node->rr_cost;
-    node->rrr_cost = 0;
-    node->rrb_cost = 0;
-    node->rra_cost = 0;
+    if (strategy == 0)
+    {
+        n->rr_cost = min(sf, df);
+        n->rb_cost = sf - n->rr_cost;
+        n->ra_cost = df - n->rr_cost;
+        n->rrr_cost = 0;
+        n->rrb_cost = 0;
+        n->rra_cost = 0;
+    }
+    else if (strategy == 1)
+    {
+        n->rrr_cost = min(sb, db);
+        n->rrb_cost = sb - n->rrr_cost;
+        n->rra_cost = db - n->rrr_cost;
+        n->rr_cost = 0;
+        n->rb_cost = 0;
+        n->ra_cost = 0;
+    }
+    else if (strategy == 2)
+    {
+        n->rb_cost = sf;
+        n->rra_cost = db;
+        n->rr_cost = 0;
+        n->ra_cost = 0;
+        n->rrr_cost = 0;
+        n->rrb_cost = 0;
+    }
+    else
+    {
+        n->rrb_cost = sb;
+        n->ra_cost = df;
+        n->rr_cost = 0;
+        n->rb_cost = 0;
+        n->rrr_cost = 0;
+        n->rra_cost = 0;
+    }
 }
 
-static void set_costs_strategy_rrr(t_node *node, int src_back, int dest_back)
+static int find_min_strategy(t_node *n, int c[4], int sf, int sb, int df, int db)
 {
-    node->rrr_cost = min(src_back, dest_back);
-    node->rrb_cost = src_back - node->rrr_cost;
-    node->rra_cost = dest_back - node->rrr_cost;
-    node->rr_cost = 0;
-    node->rb_cost = 0;
-    node->ra_cost = 0;
-}
+    int min_cost;
+    int best_strategy;
 
-static void set_costs_strategy_rb_rra(t_node *node, int src_fwd, int dest_back)
-{
-    node->rb_cost = src_fwd;
-    node->rra_cost = dest_back;
-    node->rr_cost = 0;
-    node->ra_cost = 0;
-    node->rrr_cost = 0;
-    node->rrb_cost = 0;
-}
-
-static void set_costs_strategy_rrb_ra(t_node *node, int src_back, int dest_fwd)
-{
-    node->rrb_cost = src_back;
-    node->ra_cost = dest_fwd;
-    node->rr_cost = 0;
-    node->rb_cost = 0;
-    node->rrr_cost = 0;
-    node->rra_cost = 0;
+    min_cost = c[0];
+    best_strategy = 0;
+    if (c[1] < min_cost && (min_cost = c[1]))
+        best_strategy = 1;
+    if (c[2] < min_cost && (min_cost = c[2]))
+        best_strategy = 2;
+    if (c[3] < min_cost && (min_cost = c[3]))
+        best_strategy = 3;
+    set_strategy(n, best_strategy, sf, sb, df, db);
+    return (min_cost);
 }
 
 int calc_node_cost(t_node *node, t_list *src, t_list *dest)
 {
-    int src_fwd;
-    int src_back;
-    int dest_fwd;
-    int dest_back;
     int costs[4];
-    int min_cost;
+    int sf;
+    int sb;
+    int df;
+    int db;
 
-    src_fwd = node->index;
-    dest_fwd = node->target;
-    src_back = src->size - src_fwd;
-    dest_back = dest->size - dest_fwd;
-    costs[0] = src_fwd + dest_fwd - min(src_fwd, dest_fwd);
-    costs[1] = src_back + dest_back - min(src_back, dest_back);
-    costs[2] = src_fwd + dest_back;
-    costs[3] = src_back + dest_fwd;
-    min_cost = costs[0];
-    set_costs_strategy_rr(node, src_fwd, dest_fwd);
-    if (costs[1] < min_cost)
-    {
-        min_cost = costs[1];
-        set_costs_strategy_rrr(node, src_back, dest_back);
-    }
-    if (costs[2] < min_cost)
-    {
-        min_cost = costs[2];
-        set_costs_strategy_rb_rra(node, src_fwd, dest_back);
-    }
-    if (costs[3] < min_cost)
-    {
-        min_cost = costs[3];
-        set_costs_strategy_rrb_ra(node, src_back, dest_fwd);
-    }
-    return (min_cost);
+    sf = node->index;
+    df = node->target;
+    sb = src->size - sf;
+    db = dest->size - df;
+    costs[0] = sf + df - min(sf, df);
+    costs[1] = sb + db - min(sb, db);
+    costs[2] = sf + db;
+    costs[3] = sb + df;
+    return (find_min_strategy(node, costs, sf, sb, df, db));
 }

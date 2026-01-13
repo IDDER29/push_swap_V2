@@ -13,6 +13,8 @@ LIB_OBJS    = $(LIB_SRCS:.c=.o)
 
 # Push swap sources
 PUSH_SRCS   = main.c \
+              input_validation.c \
+              push_swap_main.c \
               stack_operations.c \
               stack_push_operations.c \
               swap_operations.c \
