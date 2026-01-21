@@ -26,6 +26,10 @@ static void	free_all(t_list *stack_a, t_list *stack_b, char *line)
 
 static void	error_exit(t_list *stack_a, t_list *stack_b, char *line)
 {
+	char	*temp;
+
+	temp = get_next_line(-1);
+	free(temp);
 	free_all(stack_a, stack_b, line);
 	write(2, "Error\n", 6);
 	exit(1);
@@ -69,5 +73,7 @@ int	main(int argc, char **argv)
 	}
 	print_result(&stack_a, &stack_b);
 	free_all(&stack_a, &stack_b, NULL);
+	line = get_next_line(-1);
+	free(line);
 	return (0);
 }

@@ -123,26 +123,41 @@ static char	*update_buffer(char *buffer)
 	return (free(buffer), new_buffer);
 }
 
+static char	*read_buffer(char **buffer, int fd)
+{
+	char	temp[BUFFER_SIZE + 1];
+	int		bytes_read;
+
+	bytes_read = 1;
+	while (!ft_strchr_gnl(*buffer, '\n') && bytes_read > 0)
+	{
+		bytes_read = read(fd, temp, BUFFER_SIZE);
+		if (bytes_read < 0)
+			return (free(*buffer), *buffer = NULL, NULL);
+		temp[bytes_read] = '\0';
+		*buffer = ft_strjoin_gnl(*buffer, temp);
+		if (!*buffer)
+			return (NULL);
+	}
+	return (*buffer);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
-	char		temp[BUFFER_SIZE + 1];
-	int			bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	bytes_read = 1;
-	while (!ft_strchr_gnl(buffer, '\n') && bytes_read > 0)
 	{
-		bytes_read = read(fd, temp, BUFFER_SIZE);
-		if (bytes_read < 0)
-			return (free(buffer), buffer = NULL, NULL);
-		temp[bytes_read] = '\0';
-		buffer = ft_strjoin_gnl(buffer, temp);
-		if (!buffer)
-			return (NULL);
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
+		}
+		return (NULL);
 	}
+	if (!read_buffer(&buffer, fd))
+		return (NULL);
 	line = extract_line(buffer);
 	buffer = update_buffer(buffer);
 	return (line);

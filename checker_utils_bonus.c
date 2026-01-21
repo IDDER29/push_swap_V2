@@ -60,10 +60,28 @@ static int	execute_rotate(char *line, t_list *a, t_list *b)
 	return (1);
 }
 
+static void	trim_line_ending(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\r' || line[i] == '\n')
+		{
+			line[i] = '\n';
+			line[i + 1] = '\0';
+			return ;
+		}
+		i++;
+	}
+}
+
 int	execute_instruction(char *line, t_list *stack_a, t_list *stack_b)
 {
 	if (!line)
 		return (0);
+	trim_line_ending(line);
 	if (line[0] == '\n')
 		return (1);
 	if (execute_push_swap(line, stack_a, stack_b))
